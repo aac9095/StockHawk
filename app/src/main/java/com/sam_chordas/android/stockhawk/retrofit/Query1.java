@@ -3,7 +3,7 @@ package com.sam_chordas.android.stockhawk.retrofit;
 /**
  * Created by Ayush on 20-07-2016.
  */
-public class Query {
+public class Query1 {
     private Integer count;
     private String created;
     private String lang;

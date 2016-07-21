@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="http://schemas.android.com/tools">
     <string name="app_name">Stock Hawk</string>
 
     <string name="action_example">Example action</string>
@@ -13,6 +13,14 @@
     <string name="symbol">Symbol</string>
     <string name="stock_name">Stock Name</string>
     <string name="currency">Currency</string>
-    <string name="bid">Bid</string>
+    <string name="bid">Current Bid</string>
     <string name="detail_activity">Stock Details</string>
+    <string name="minimum_bid">Minimum Bid</string>
+    <string name="maximum_bid">Maximum Bid</string>
+    <string name="stock_details">Stock Details</string>
+    <string name="title_widget_stocks">Stock Hawk</string>
+    <string name="empty_view_text">Stock Data not available</string>
+    <string name="stock_symbol_content_description">Stock Symbol</string>
+    <string name="bid_price_content_description">Bid price</string>
+    <string name="change_content_description">Change </string>
 </resources>

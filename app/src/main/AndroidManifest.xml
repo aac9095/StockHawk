@@ -26,16 +26,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <service
-            android:name=".service.StockTaskService"
-            android:exported="true"
-            android:permission="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE">
+        <!-- Detail Widget -->
+        <receiver
+            android:name=".widget.DetailWidgetProvider"
+            android:enabled="true"
+            android:label="@string/title_widget_stocks">
             <intent-filter>
-                <action android:name="com.google.android.gms.gcm.ACTION_TASK_READY" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.sam_chordas.android.stockhawk.ACTION_DATA_UPDATED" />
             </intent-filter>
-        </service>
-        <service android:name=".service.StockIntentService" />
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info_detail" />
+        </receiver>
+        <service
+            android:name=".widget.DetailWidgetRemoteViewsService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <provider
             android:name=".data.generated.QuoteProvider"
@@ -43,6 +51,7 @@
             android:exported="false" />
 
         <activity android:name=".ui.DetailActivity"
+            android:label="@string/stock_details"
             android:parentActivityName=".ui.MyStocksActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
             android:value="com.sam_chordas.android.stockhawk.ui.MyStocksActivity"/>

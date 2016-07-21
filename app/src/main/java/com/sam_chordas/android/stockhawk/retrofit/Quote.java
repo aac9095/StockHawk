@@ -4,76 +4,76 @@ package com.sam_chordas.android.stockhawk.retrofit;
  * Created by Ayush on 20-07-2016.
  */
 public class Quote {
-    private String symbol;
-    private String date;
-    private String open;
-    private String high;
-    private String low;
-    private String close;
-    private String volume;
-    private String adjClose;
+    private String Symbol;
+    private String Date;
+    private String Open;
+    private String High;
+    private String Low;
+    private String Close;
+    private String Volume;
+    private String Adj_Close;
 
-    public String getAdjClose() {
-        return adjClose;
+    public String getAdj_Close() {
+        return Adj_Close;
     }
 
-    public void setAdjClose(String adjClose) {
-        this.adjClose = adjClose;
+    public void setAdj_Close(String adj_Close) {
+        Adj_Close = adj_Close;
     }
 
     public String getClose() {
-        return close;
+        return Close;
     }
 
     public void setClose(String close) {
-        this.close = close;
+        Close = close;
     }
 
     public String getDate() {
-        return date;
+        return Date;
     }
 
     public void setDate(String date) {
-        this.date = date;
+        Date = date;
     }
 
     public String getHigh() {
-        return high;
+        return High;
     }
 
     public void setHigh(String high) {
-        this.high = high;
+        High = high;
     }
 
     public String getLow() {
-        return low;
+        return Low;
     }
 
     public void setLow(String low) {
-        this.low = low;
+        Low = low;
     }
 
     public String getOpen() {
-        return open;
+        return Open;
     }
 
     public void setOpen(String open) {
-        this.open = open;
+        Open = open;
     }
 
     public String getSymbol() {
-        return symbol;
+        return Symbol;
     }
 
     public void setSymbol(String symbol) {
-        this.symbol = symbol;
+        Symbol = symbol;
     }
 
     public String getVolume() {
-        return volume;
+        return Volume;
     }
 
     public void setVolume(String volume) {
-        this.volume = volume;
+        Volume = volume;
     }
 }

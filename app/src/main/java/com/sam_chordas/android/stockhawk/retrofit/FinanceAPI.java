@@ -11,5 +11,5 @@ public interface FinanceAPI {
 
     @GET("/v1/public/yql?&format=json&diagnostics=true&env=store://datatables.org/alltableswithkeys&callback=")
 
-    Call<Finance> getSymbol (@retrofit2.http.Query("q") String query);
+    Call<Finance> getSymbol (@Query("q") String query);
 }

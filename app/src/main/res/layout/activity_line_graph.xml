@@ -12,7 +12,7 @@
         app:spark_scrubEnabled="true"
         app:spark_animateChanges="true"
         android:background="#000000"
-        android:layout_weight="2"/>
+        android:layout_weight="2" />
 
     <android.support.v7.widget.GridLayout
         android:id="@+id/detail_additional_pane"
@@ -49,28 +49,28 @@
             tools:text="GOOG" />
 
         <TextView
-            android:id="@+id/detail_name_label_textview"
+            android:id="@+id/detail_min_label_textview"
             android:fontFamily="sans-serif"
             android:gravity="center_vertical"
-            android:text="@string/stock_name"
+            android:text="@string/minimum_bid"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="@color/detail_accent_label"
             app:layout_gravity="fill"
             app:layout_rowWeight="1" />
 
         <TextView
-            android:id="@+id/detail_name_textview"
+            android:id="@+id/detail_min_textview"
             android:gravity="center_vertical"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="@android:color/white"
             app:layout_gravity="fill"
-            tools:text="GOOGLE" />
+            tools:text="899.23" />
 
         <TextView
-            android:id="@+id/detail_currency_label_textview"
+            android:id="@+id/detail_max_label_textview"
             android:fontFamily="sans-serif"
             android:gravity="center_vertical"
-            android:text="@string/currency"
+            android:text="@string/maximum_bid"
             android:textColor="@color/detail_accent_label"
             android:textSize="20sp"
             app:layout_gravity="fill"
@@ -78,12 +78,12 @@
 
 
         <TextView
-            android:id="@+id/detail_currency_textview"
+            android:id="@+id/detail_max_textview"
             android:gravity="center_vertical"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="@android:color/white"
             app:layout_gravity="fill"
-            tools:text="USD" />
+            tools:text="901.12" />
 
         <TextView
             android:id="@+id/detail_bid_label_textview"

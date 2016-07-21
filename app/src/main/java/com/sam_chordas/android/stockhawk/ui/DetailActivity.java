@@ -1,8 +1,10 @@
 package com.sam_chordas.android.stockhawk.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.Time;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +18,9 @@ import com.sam_chordas.android.stockhawk.retrofit.Finance;
 import com.sam_chordas.android.stockhawk.retrofit.FinanceAPI;
 import com.sam_chordas.android.stockhawk.retrofit.Quote;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -30,28 +35,56 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DetailActivity extends AppCompatActivity implements Callback<Finance> {
     private String bid_price ;
     private TextView symbol;
-    private TextView stockName;
-    private TextView currency;
+    private TextView minBid;
+    private TextView maxBid;
     private TextView bid;
     private float []data;
     private SparkView sparkView;
     private SparkAdapter sparkAdapter;
     String msymbol;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_line_graph);
 
         symbol= (TextView) findViewById(R.id.detail_symbol_textview);
-        stockName = (TextView) findViewById(R.id.detail_name_textview);
-        currency = (TextView) findViewById(R.id.detail_currency_textview);
+        minBid = (TextView) findViewById(R.id.detail_min_textview);
+        maxBid = (TextView) findViewById(R.id.detail_max_textview);
         bid = (TextView) findViewById(R.id.detail_bid_textview);
-        bid_price = getIntent().getStringExtra("bid_price");
+        bid_price = getIntent().getStringExtra("bid");
         msymbol = getIntent().getStringExtra("symbol");
-        String q = "select%20*%20from%20yahoo.finance.historicaldata%20where%20symbol%20%3D%20%22" ;
-        String p ="%22%20and%20startDate%20%3D%20%222016-07-11%22%20and%20endDate%20%3D%20%222016-07-19%22";
-        String symbolQuery = q + msymbol + p;
-        Log.e("Symbol Query",symbolQuery);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH,-1);
+
+        int toDay= calendar.get(Calendar.DATE);
+        int toMonth = calendar.get(Calendar.MONTH);
+        int toYear = calendar.get(Calendar.YEAR);
+
+        String todayDate,prevWeek;
+
+        if(toMonth<10)
+            todayDate = String.valueOf(toYear) + "-0" + toMonth + "-" + toDay;
+        else
+            todayDate = String.valueOf(toYear) + "-" + toMonth + "-" + toDay;
+
+
+        calendar.add(Calendar.DAY_OF_MONTH,-7);
+
+        int fromDay= calendar.get(Calendar.DATE);
+        int fromMonth = calendar.get(Calendar.MONTH);
+        int fromYear = calendar.get(Calendar.YEAR);
+
+        if(fromMonth<10)
+            prevWeek = String.valueOf(fromYear) + "-0" + fromMonth + "-" + fromDay;
+        else
+            prevWeek = String.valueOf(fromYear) + "-" + fromMonth + "-" + fromDay;
+
+        String symbolQuery = "select * from yahoo.finance.historicaldata where symbol = \'"
+                + msymbol
+                + "\' and startDate = \'" + prevWeek + "\' and endDate = \'" + todayDate + "\'";
+
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                 .create();
@@ -63,6 +96,7 @@ public class DetailActivity extends AppCompatActivity implements Callback<Financ
         FinanceAPI financeAPI = retrofit.create(FinanceAPI.class);
         Call<Finance> financeCall = financeAPI.getSymbol(symbolQuery);
         financeCall.enqueue(this);
+
         sparkView = (SparkView) findViewById(R.id.sparkview);
         data = new float[0];
         sparkAdapter = new SparkAdapter(data);
@@ -87,14 +121,26 @@ public class DetailActivity extends AppCompatActivity implements Callback<Financ
     }
 
     void getStockDetails(Finance finance){
-        currency.setText("USD");
-        bid.setText(bid_price);
-        symbol.setText(msymbol);
-        List<Quote> quote = finance.getQuery().getResults().getQuote();
-        data = new float[quote.size()];
-        for(int i=0;i<quote.size();i++){
-            data[i]=Float.parseFloat(quote.get(i).getAdjClose());
+        if(finance!=null){
+            bid.setText(bid_price);
+            symbol.setText(msymbol);
+            ArrayList<Quote> quote = finance.getQuery1().getResults().getQuote();
+            data = new float[quote.size()];
+            float min = Float.MAX_VALUE;
+            float max = Float.MIN_VALUE;
+            for(int i=quote.size()-1,j=0;i>=0;i--,j++){
+                data[j]=Float.parseFloat(quote.get(i).getAdj_Close());
+                if(min>data[j])
+                    min = data[j];
+                if(max<data[j])
+                    max=data[j];
+            }
+            minBid.setText(String.valueOf(min));
+            maxBid.setText(String.valueOf(max));
+            sparkAdapter.swapData(data);
         }
-        sparkAdapter.swapData(data);
+        else {
+            Log.e("Response","null");
+        }
     }
 }

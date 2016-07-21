@@ -1,5 +1,8 @@
 package com.sam_chordas.android.stockhawk.rest;
 
+import android.graphics.RectF;
+import android.util.Log;
+
 /**
  * Created by Ayush on 20-07-2016.
  */

@@ -7,13 +7,13 @@ import java.util.List;
  * Created by Ayush on 20-07-2016.
  */
 public class Results {
-    private List<Quote> quote = new ArrayList<Quote>();
+    private ArrayList<Quote> quote = new ArrayList<Quote>();
 
-    public List<Quote> getQuote() {
+    public ArrayList<Quote> getQuote() {
         return quote;
     }
 
-    public void setQuote(List<Quote> quote) {
+    public void setQuote(ArrayList<Quote> quote) {
         this.quote = quote;
     }
 }
