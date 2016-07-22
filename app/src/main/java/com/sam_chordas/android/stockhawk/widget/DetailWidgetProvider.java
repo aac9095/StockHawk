@@ -11,9 +11,11 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.TaskStackBuilder;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.sam_chordas.android.stockhawk.R;
+import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.service.StockTaskService;
 import com.sam_chordas.android.stockhawk.ui.DetailActivity;
 import com.sam_chordas.android.stockhawk.ui.MyStocksActivity;
@@ -22,6 +24,8 @@ import com.sam_chordas.android.stockhawk.ui.MyStocksActivity;
  * Created by kosrat on 7/15/16.
  */
 public class DetailWidgetProvider extends AppWidgetProvider {
+
+    public static final String DETAIL_ACTION = "com.sam_chordas.android.stockhawk.DETAIL_ACTION";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -42,6 +46,8 @@ public class DetailWidgetProvider extends AppWidgetProvider {
             }
 
             Intent clickIntentTemplate = new Intent(context, DetailActivity.class);
+            clickIntentTemplate.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+            clickIntentTemplate.setAction(DETAIL_ACTION);
             PendingIntent clickPendingIntentTemplate = TaskStackBuilder.create(context)
                     .addNextIntentWithParentStack(clickIntentTemplate)
                     .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -63,6 +69,12 @@ public class DetailWidgetProvider extends AppWidgetProvider {
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
                     new ComponentName(context, getClass()));
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);
+        }
+        if(intent.getAction().equals(DetailWidgetProvider.DETAIL_ACTION)){
+            int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+                    AppWidgetManager.INVALID_APPWIDGET_ID);
+            Log.e("Symbol",intent.getStringExtra(QuoteColumns.SYMBOL));
+            context.startActivity(intent);
         }
     }
 

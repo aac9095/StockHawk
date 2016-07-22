@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
@@ -14,9 +16,11 @@ import android.widget.Toast;
 import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.GcmTaskService;
 import com.google.android.gms.gcm.TaskParams;
+import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
 import com.sam_chordas.android.stockhawk.rest.Utils;
+import com.sam_chordas.android.stockhawk.ui.MyStocksActivity;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -131,8 +135,13 @@ public class StockTaskService extends GcmTaskService{
 
           ArrayList<ContentProviderOperation> arrayList = Utils.quoteJsonToContentVals(getResponse);
           if(arrayList==null) {
-            Toast.makeText(mContext, "Uh-Oh! Invalid Stock!!!", Toast.LENGTH_SHORT).show();
-            Log.e(LOG_TAG,"Uh-Oh! Invalid Stock!!!");
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+              public void run() {
+                // UI code goes here
+                Toast.makeText(mContext, R.string.invalid_stock, Toast.LENGTH_LONG).show();
+              }
+            });
           }
           else {
             mContext.getContentResolver().applyBatch(QuoteProvider.AUTHORITY,
@@ -155,4 +164,6 @@ public class StockTaskService extends GcmTaskService{
             .setPackage(context.getPackageName());
     context.sendBroadcast(dataUpdatedIntent);
   }
+
+
 }

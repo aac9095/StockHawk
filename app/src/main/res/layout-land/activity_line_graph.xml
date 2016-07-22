@@ -2,13 +2,13 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <com.robinhood.spark.SparkView
         android:id="@+id/sparkview"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         app:spark_scrubEnabled="true"
         app:spark_animateChanges="true"
         android:background="#000000"
@@ -16,8 +16,8 @@
 
     <android.support.v7.widget.GridLayout
         android:id="@+id/detail_additional_pane"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="2"
         android:background="@color/detail_accent_pane_background"
         android:paddingBottom="@dimen/abc_list_item_padding_horizontal_material"

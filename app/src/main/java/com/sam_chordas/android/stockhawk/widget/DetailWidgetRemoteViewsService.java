@@ -108,9 +108,10 @@ public class DetailWidgetRemoteViewsService extends RemoteViewsService {
                     }
 
                     final Intent fillInIntent = new Intent();
+                    fillInIntent.setAction(DetailWidgetProvider.DETAIL_ACTION);
                     fillInIntent.putExtra(QuoteColumns.SYMBOL, data.getString(data.getColumnIndex(QuoteColumns.SYMBOL)));
                     fillInIntent.putExtra(QuoteColumns.BIDPRICE, data.getString(data.getColumnIndex(QuoteColumns.BIDPRICE)));
-                    views.setOnClickFillInIntent(R.id.widget_list, fillInIntent);
+                    views.setOnClickFillInIntent(R.id.widget_list_item, fillInIntent);
 
                 }
                 return views;

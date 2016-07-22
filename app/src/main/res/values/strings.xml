@@ -23,4 +23,5 @@
     <string name="stock_symbol_content_description">Stock Symbol</string>
     <string name="bid_price_content_description">Bid price</string>
     <string name="change_content_description">Change </string>
+    <string name="invalid_stock">Uh-Oh! Invalid Stock!!!</string>
 </resources>

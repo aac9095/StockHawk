@@ -170,7 +170,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   }
 
   public void networkToast(){
-    Toast.makeText(mContext, getString(R.string.network_toast), Toast.LENGTH_SHORT).show();
+    Toast.makeText(mContext, getString(R.string.network_toast), Toast.LENGTH_LONG).show();
   }
 
 
