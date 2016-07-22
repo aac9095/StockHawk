@@ -1,5 +1,6 @@
 package com.sam_chordas.android.stockhawk.service;
 
+import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,8 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.os.RemoteException;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.GcmTaskService;
 import com.google.android.gms.gcm.TaskParams;
@@ -20,6 +23,7 @@ import com.squareup.okhttp.Response;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 /**
  * Created by sam_chordas on 9/30/15.
@@ -109,6 +113,7 @@ public class StockTaskService extends GcmTaskService{
     String urlString;
     String getResponse;
     int result = GcmNetworkManager.RESULT_FAILURE;
+    updateWidgets();
 
     if (urlStringBuilder != null){
       urlString = urlStringBuilder.toString();
@@ -123,9 +128,16 @@ public class StockTaskService extends GcmTaskService{
             mContext.getContentResolver().update(QuoteProvider.Quotes.CONTENT_URI, contentValues,
                 null, null);
           }
-          mContext.getContentResolver().applyBatch(QuoteProvider.AUTHORITY,
-              Utils.quoteJsonToContentVals(getResponse));
-          updateWidgets();
+
+          ArrayList<ContentProviderOperation> arrayList = Utils.quoteJsonToContentVals(getResponse);
+          if(arrayList==null) {
+            Toast.makeText(mContext, "Uh-Oh! Invalid Stock!!!", Toast.LENGTH_SHORT).show();
+            Log.e(LOG_TAG,"Uh-Oh! Invalid Stock!!!");
+          }
+          else {
+            mContext.getContentResolver().applyBatch(QuoteProvider.AUTHORITY,
+                    arrayList);
+          }
         }catch (RemoteException | OperationApplicationException e){
           Log.e(LOG_TAG, "Error applying batch insert", e);
         }
@@ -137,7 +149,7 @@ public class StockTaskService extends GcmTaskService{
     return result;
   }
   private void updateWidgets() {
-    Context context = this;
+    Context context = mContext;
     // Setting the package ensures that only components in our app will receive the broadcast
     Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED)
             .setPackage(context.getPackageName());

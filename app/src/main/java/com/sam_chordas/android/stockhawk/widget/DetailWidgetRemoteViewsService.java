@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Binder;
 import android.os.Build;
+import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -109,7 +110,7 @@ public class DetailWidgetRemoteViewsService extends RemoteViewsService {
                     final Intent fillInIntent = new Intent();
                     fillInIntent.putExtra(QuoteColumns.SYMBOL, data.getString(data.getColumnIndex(QuoteColumns.SYMBOL)));
                     fillInIntent.putExtra(QuoteColumns.BIDPRICE, data.getString(data.getColumnIndex(QuoteColumns.BIDPRICE)));
-                    views.setOnClickFillInIntent(R.id.widget_list_item, fillInIntent);
+                    views.setOnClickFillInIntent(R.id.widget_list, fillInIntent);
 
                 }
                 return views;

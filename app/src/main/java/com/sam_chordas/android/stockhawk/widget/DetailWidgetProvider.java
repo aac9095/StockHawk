@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -13,6 +14,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.widget.RemoteViews;
 
 import com.sam_chordas.android.stockhawk.R;
+import com.sam_chordas.android.stockhawk.service.StockTaskService;
 import com.sam_chordas.android.stockhawk.ui.DetailActivity;
 import com.sam_chordas.android.stockhawk.ui.MyStocksActivity;
 
@@ -49,6 +51,18 @@ public class DetailWidgetProvider extends AppWidgetProvider {
             // Tell the AppWidgetManager to perform an update on the current app widget
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widget_list);
             appWidgetManager.updateAppWidget(appWidgetId, views);
+        }
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
+    }
+
+    @Override
+    public void onReceive(@NonNull Context context, @NonNull Intent intent) {
+        super.onReceive(context, intent);
+        if (StockTaskService.ACTION_DATA_UPDATED.equals(intent.getAction())) {
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
+                    new ComponentName(context, getClass()));
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);
         }
     }
 

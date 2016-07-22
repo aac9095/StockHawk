@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.robinhood.spark.SparkView;
 import com.sam_chordas.android.stockhawk.R;
+import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.rest.SparkAdapter;
 import com.sam_chordas.android.stockhawk.retrofit.Finance;
 import com.sam_chordas.android.stockhawk.retrofit.FinanceAPI;
@@ -52,8 +53,8 @@ public class DetailActivity extends AppCompatActivity implements Callback<Financ
         minBid = (TextView) findViewById(R.id.detail_min_textview);
         maxBid = (TextView) findViewById(R.id.detail_max_textview);
         bid = (TextView) findViewById(R.id.detail_bid_textview);
-        bid_price = getIntent().getStringExtra("bid");
-        msymbol = getIntent().getStringExtra("symbol");
+        bid_price = getIntent().getStringExtra(QuoteColumns.BIDPRICE);
+        msymbol = getIntent().getStringExtra(QuoteColumns.SYMBOL);
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH,-1);

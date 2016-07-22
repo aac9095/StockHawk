@@ -90,8 +90,8 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                 Cursor cursor=mCursorAdapter.getCursor();
                 cursor.moveToPosition(position);
                 Intent intent = new Intent(MyStocksActivity.this,DetailActivity.class);
-                intent.putExtra("symbol",cursor.getString(cursor.getColumnIndex("symbol")));
-                intent.putExtra("bid",cursor.getString(cursor.getColumnIndex("bid_price")));
+                intent.putExtra(QuoteColumns.SYMBOL,cursor.getString(cursor.getColumnIndex("symbol")));
+                intent.putExtra(QuoteColumns.BIDPRICE,cursor.getString(cursor.getColumnIndex("bid_price")));
                 MyStocksActivity.this.startActivity(intent);
               }
             }));
@@ -172,6 +172,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   public void networkToast(){
     Toast.makeText(mContext, getString(R.string.network_toast), Toast.LENGTH_SHORT).show();
   }
+
 
   public void restoreActionBar() {
     ActionBar actionBar = getSupportActionBar();

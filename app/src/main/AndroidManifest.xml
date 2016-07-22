@@ -39,6 +39,16 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info_detail" />
         </receiver>
+
+        <service android:name="com.sam_chordas.android.stockhawk.service.StockTaskService"
+            android:permission="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.gcm.ACTION_TASK_READY"/>
+            </intent-filter>
+        </service>
+        <service android:name="com.sam_chordas.android.stockhawk.service.StockIntentService" />
+
         <service
             android:name=".widget.DetailWidgetRemoteViewsService"
             android:enabled="true"
