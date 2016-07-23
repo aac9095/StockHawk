@@ -87,12 +87,17 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
               @Override public void onItemClick(View v, int position) {
                 //TODO:
                 // do something on item click
-                Cursor cursor=mCursorAdapter.getCursor();
-                cursor.moveToPosition(position);
-                Intent intent = new Intent(MyStocksActivity.this,DetailActivity.class);
-                intent.putExtra(QuoteColumns.SYMBOL,cursor.getString(cursor.getColumnIndex("symbol")));
-                intent.putExtra(QuoteColumns.BIDPRICE,cursor.getString(cursor.getColumnIndex("bid_price")));
-                MyStocksActivity.this.startActivity(intent);
+                if(isConnected){
+                  Cursor cursor=mCursorAdapter.getCursor();
+                  cursor.moveToPosition(position);
+                  Intent intent = new Intent(MyStocksActivity.this,DetailActivity.class);
+                  intent.putExtra(QuoteColumns.SYMBOL,cursor.getString(cursor.getColumnIndex("symbol")));
+                  intent.putExtra(QuoteColumns.BIDPRICE,cursor.getString(cursor.getColumnIndex("bid_price")));
+                  MyStocksActivity.this.startActivity(intent);
+                }
+                else {
+                  networkToast();
+                }
               }
             }));
     recyclerView.setAdapter(mCursorAdapter);
@@ -115,7 +120,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                       new String[] { input.toString() }, null);
                   if (c.getCount() != 0) {
                     Toast toast =
-                        Toast.makeText(MyStocksActivity.this, "This stock is already saved!",
+                        Toast.makeText(MyStocksActivity.this, R.string.stock_is_already_saved,
                             Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, Gravity.CENTER, 0);
                     toast.show();

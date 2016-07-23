@@ -7,7 +7,7 @@
     <string name="action_change_units">Change Units</string>
     <string name="symbol_search">Symbol Search</string>
     <string name="content_test">Search for a Stock Symbol</string>
-    <string name="input_hint">FB</string>
+    <string name="input_hint" translatable="false">FB</string>
     <string name="input_prefill"></string>
     <string name="network_toast">Uh-oh! This app requires an internet connection</string>
     <string name="symbol">Symbol</string>
@@ -24,4 +24,6 @@
     <string name="bid_price_content_description">Bid price</string>
     <string name="change_content_description">Change </string>
     <string name="invalid_stock">Uh-Oh! Invalid Stock!!!</string>
+    <string name="stock_is_already_saved">This stock is already saved!</string>
+    <string name="insert_new_stock">Insert new stock</string>
 </resources>
